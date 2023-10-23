@@ -29,5 +29,6 @@ module.exports = {
     "import/no-absolute-path": "off",
     "@typescript-eslint/space-before-function-paren": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
   },
 };
