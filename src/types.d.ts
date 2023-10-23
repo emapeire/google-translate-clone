@@ -21,3 +21,8 @@ export type Action =
   | { type: "SET_FROM_TEXT"; payload: string }
   | { type: "SET_TO_TEXT"; payload: string }
   | { type: "INTERCHANGE_LANGUAGES" };
+
+export enum SectionType {
+  From = "from",
+  To = "to",
+}

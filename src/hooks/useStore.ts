@@ -31,16 +31,28 @@ function reducer(state: State, action: Action) {
   }
 
   if (type === "SET_FROM_LANGUAGE") {
+    const newFromLanguage = action.payload;
+    let newToLanguage = state.toLanguage;
+    if (newFromLanguage === newToLanguage) {
+      newToLanguage = newFromLanguage === "en" ? "es" : "en";
+    }
     return {
       ...state,
-      fromLanguage: action.payload,
+      fromLanguage: newFromLanguage,
+      toLanguage: newToLanguage,
     };
   }
 
   if (type === "SET_TO_LANGUAGE") {
+    const newToLanguage = action.payload;
+    let newFromLanguage = state.fromLanguage;
+    if (newToLanguage === newFromLanguage) {
+      newFromLanguage = newToLanguage === "en" ? "es" : "en";
+    }
     return {
       ...state,
-      toLanguage: action.payload,
+      fromLanguage: newFromLanguage,
+      toLanguage: newToLanguage,
     };
   }
 
