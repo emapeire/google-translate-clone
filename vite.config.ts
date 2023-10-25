@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/translate": {
         target: "http://localhost:5173",
+        changeOrigin: true,
       },
     },
   },
