@@ -12,10 +12,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, _res, next) => {
+  console.log("Request URL:", req.originalUrl);
+  next();
+});
+
 app.post("/translate", (req, res, next) => {
   console.log("--> Handler called", req.body);
-  res.send("Handler was called");
-
   const { fromLanguage, toLanguage, text } = req.body;
 
   openai.chat.completions

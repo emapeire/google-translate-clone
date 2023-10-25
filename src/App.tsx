@@ -1,14 +1,14 @@
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
-import useStore from './hooks/useStore'
-import { AUTO_LANGUAGE } from './utils/constants'
-import { ArrowsIcon } from './components/Icons'
-import { LanguageSelector } from './components/LanguageSelector'
-import { SectionType } from './types.d'
-import { TextArea } from './components/TextArea'
-import { useEffect } from 'react'
-import { translate } from './services/translate'
+import { useEffect, useState, useRef } from 'react';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col, Button, Stack } from 'react-bootstrap';
+import useStore from './hooks/useStore';
+import { AUTO_LANGUAGE } from './utils/constants';
+import { ArrowsIcon } from './components/Icons';
+import { LanguageSelector } from './components/LanguageSelector';
+import { SectionType } from './types.d';
+import { TextArea } from './components/TextArea';
+import { translate } from './services/translate';
 
 function App() {
   const {
@@ -22,18 +22,44 @@ function App() {
     setToLanguage,
     setFromText,
     setToText
-  } = useStore()
+  } = useStore();
 
-  // TODO!
+  const [debounceTimeout, setDebounceTimeout] = useState<any>(null);
+  const requestTokenRef = useRef(0);
+
   useEffect(() => {
-    if (fromText === '') return
-    translate({ fromLanguage, toLanguage, text: fromText })
-      .then(toText => {
-        if (toText === null) return
-        setToText(toText)
-      })
-      .catch(() => { setToText('Error') })
-  }, [fromText])
+    if (fromText === '') {
+      setToText('');
+      if (debounceTimeout !== null) {
+        clearTimeout(debounceTimeout);
+      }
+      return;
+    }
+
+    const newDebounceTimeout = setTimeout(() => {
+      requestTokenRef.current += 1;
+      const currentToken = requestTokenRef.current;
+
+      translate({ fromLanguage, toLanguage, text: fromText })
+        .then(toText => {
+          if (toText === null) return;
+          if (currentToken === requestTokenRef.current) {
+            setToText(toText);
+          }
+        })
+        .catch(() => {
+          if (currentToken === requestTokenRef.current) {
+            setToText('Error')
+          }
+        });
+    }, 1000);
+
+    setDebounceTimeout(newDebounceTimeout);
+
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
+  }, [fromText, toLanguage, fromLanguage]);
 
   return (
     <Container fluid>
@@ -82,4 +108,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
