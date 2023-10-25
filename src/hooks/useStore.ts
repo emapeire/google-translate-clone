@@ -22,13 +22,15 @@ function reducer(state: State, action: Action) {
 
   if (type === "INTERCHANGE_LANGUAGES") {
     // State logic inside the reducer
+    const loading = state.fromText !== "";
     if (state.fromLanguage === AUTO_LANGUAGE) return state;
     return {
       ...state,
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage,
       fromText: state.toText,
-      toText: state.fromText,
+      toText: "",
+      loading,
     };
   }
 
