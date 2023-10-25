@@ -33,6 +33,7 @@ export const TextArea = ({ type, loading, value, onChange }: Props) => {
     <Form.Control
       autoFocus={type === SectionType.From}
       as={'textarea'}
+      disabled={type === SectionType.To || loading}
       placeholder={getPlaceholer({ type, loading })}
       // @ts-expect-error style is not in the type definition
       style={styles}

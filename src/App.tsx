@@ -7,6 +7,8 @@ import { ArrowsIcon } from './components/Icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
+import { useEffect } from 'react'
+import { translate } from './services/translate'
 
 function App() {
   const {
@@ -21,6 +23,17 @@ function App() {
     setFromText,
     setToText
   } = useStore()
+
+  // TODO!
+  useEffect(() => {
+    if (fromText === '') return
+    translate({ fromLanguage, toLanguage, text: fromText })
+      .then(toText => {
+        if (toText === null) return
+        setToText(toText)
+      })
+      .catch(() => { setToText('Error') })
+  }, [fromText])
 
   return (
     <Container fluid>
