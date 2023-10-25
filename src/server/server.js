@@ -13,6 +13,9 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/translate", (req, res, next) => {
+  console.log("--> Handler called", req.body);
+  res.send("Handler was called");
+
   const { fromLanguage, toLanguage, text } = req.body;
 
   openai.chat.completions
@@ -40,10 +43,11 @@ app.post("/translate", (req, res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
-  console.error(err.message);
+  console.error("Error encountered:", err.message);
+  console.error(err.stack);
   res.status(500).send("Internal Server Error");
 });
 
-app.listen(5173, () => {
-  console.log("Server is running on port 5173");
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });

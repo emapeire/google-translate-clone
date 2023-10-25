@@ -17,7 +17,7 @@ export async function translate({
   const toText = SUPPORTED_LANGUAGES[toLanguage];
 
   try {
-    const response = await fetch("/translate", {
+    const response = await fetch("http://localhost:3000/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
