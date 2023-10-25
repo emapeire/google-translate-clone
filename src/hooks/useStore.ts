@@ -27,10 +27,14 @@ function reducer(state: State, action: Action) {
       ...state,
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage,
+      fromText: state.toText,
+      toText: state.fromText,
     };
   }
 
   if (type === "SET_FROM_LANGUAGE") {
+    const loading = state.fromText !== "";
+    if (state.fromLanguage === action.payload) return state;
     const newFromLanguage = action.payload;
     let newToLanguage = state.toLanguage;
     if (newFromLanguage === newToLanguage) {
@@ -40,10 +44,14 @@ function reducer(state: State, action: Action) {
       ...state,
       fromLanguage: newFromLanguage,
       toLanguage: newToLanguage,
+      toText: "",
+      loading,
     };
   }
 
   if (type === "SET_TO_LANGUAGE") {
+    const loading = state.fromText !== "";
+    if (state.toLanguage === action.payload) return state;
     const newToLanguage = action.payload;
     let newFromLanguage = state.fromLanguage;
     if (newToLanguage === newFromLanguage) {
@@ -53,15 +61,18 @@ function reducer(state: State, action: Action) {
       ...state,
       fromLanguage: newFromLanguage,
       toLanguage: newToLanguage,
+      toText: "",
+      loading,
     };
   }
 
   if (type === "SET_FROM_TEXT") {
+    const loading = action.payload !== "";
     return {
       ...state,
-      loading: true,
+      loading,
       fromText: action.payload,
-      result: "",
+      toText: "",
     };
   }
 
