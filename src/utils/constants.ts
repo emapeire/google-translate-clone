@@ -12,4 +12,18 @@ export const SUPPORTED_LANGUAGES = {
   zh: "Chinese",
 };
 
+export const VOICE_LANGUAGES = {
+  de: "de-DE",
+  en: "en-US",
+  es: "es-ES",
+  fr: "fr-FR",
+  hi: "hi-IN",
+  it: "it-IT",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  pt: "pt-BR",
+  ru: "ru-RU",
+  zh: "zh-CN",
+};
+
 export const AUTO_LANGUAGE = "auto";
