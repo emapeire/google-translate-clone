@@ -28,4 +28,4 @@ export const VOICE_LANGUAGES = {
 
 export const AUTO_LANGUAGE = 'auto'
 
-export const port = process.env.PORT ?? 5173
+export const port = process.env.PORT ?? 3000
