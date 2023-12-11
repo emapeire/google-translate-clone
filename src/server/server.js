@@ -1,10 +1,7 @@
 import express from 'express'
 import OpenAI from 'openai'
-import dotenv from 'dotenv'
 import cors from 'cors'
 import { port } from '../constants/index'
-
-dotenv.config({ path: '.env.local' })
 
 const apiKey = process.env.OPENAI_API_KEY
 const openai = new OpenAI(apiKey)
