@@ -1,7 +1,9 @@
 import express from 'express'
 import OpenAI from 'openai'
 import cors from 'cors'
-import { port } from '../constants/index'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const apiKey = process.env.OPENAI_API_KEY
 const openai = new OpenAI(apiKey)
@@ -54,6 +56,6 @@ app.use((err, _req, res, _next) => {
   res.status(500).send('Internal Server Error')
 })
 
-app.listen(port, () => {
-  console.log(`Server is running on port http://localhost:${port}`)
+app.listen(5174, () => {
+  console.log(`Server is running on port http://localhost:5174/translate`)
 })

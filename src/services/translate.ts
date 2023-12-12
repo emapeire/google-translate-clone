@@ -1,6 +1,5 @@
 import { type FromLanguage, type Language } from '../types.d'
 import { SUPPORTED_LANGUAGES } from '../constants'
-import { port } from '../constants/index'
 
 export async function translate({
   fromLanguage,
@@ -10,7 +9,7 @@ export async function translate({
   fromLanguage: FromLanguage
   toLanguage: Language
   text: string
-}) {
+}): Promise<string> {
   if (fromLanguage === toLanguage) return text
 
   const fromText =
@@ -18,7 +17,7 @@ export async function translate({
   const toText = SUPPORTED_LANGUAGES[toLanguage]
 
   try {
-    const response = await fetch(`http://localhost:${port}/translate`, {
+    const response = await fetch(`http://localhost:5174/translate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -33,6 +32,7 @@ export async function translate({
     }
 
     const translation = await response.json()
+    console.log(translation)
     return translation
   } catch (error) {
     console.error(error)

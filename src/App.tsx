@@ -30,19 +30,19 @@ function App() {
   useEffect(() => {
     if (debounceFromText === '') return
     translate({ fromLanguage, toLanguage, text: debounceFromText })
-      .then((toText) => {
+      .then((toText: string) => {
         if (toText === null) return
         setToText(toText)
       })
       .catch(() => {
         setToText('Error')
       })
-  }, [debounceFromText, fromLanguage, toLanguage])
+  }, [debounceFromText, fromLanguage, toLanguage, setToText])
 
   const [isActionRunning, setIsActionRunning] = useState(false)
 
-  const handleClipboard = () => {
-    navigator.clipboard.writeText(toText)
+  const handleClipboard = async () => {
+    await navigator.clipboard.writeText(toText)
   }
 
   const handleSpeak = () => {
@@ -112,7 +112,7 @@ function App() {
                   display: 'flex'
                 }}
               >
-                <Button variant='link' onClick={handleClipboard}>
+                <Button variant='link' onClick={void handleClipboard}>
                   <ClipboardIcon />
                 </Button>
                 <Button
