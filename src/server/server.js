@@ -3,7 +3,7 @@ import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
-dotenv.config({ path: '.env.local' })
+dotenv.config()
 
 const apiKey = process.env.OPENAI_API_KEY
 const openai = new OpenAI(apiKey)

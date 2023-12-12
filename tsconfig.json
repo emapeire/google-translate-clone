@@ -16,7 +16,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".eslintrc.cjs", "vite.config.ts"],
+  "include": ["src", ".eslintrc.cjs"],
   "exclude": ["node_modules", "dist", "./src/server/server.js"],
   "references": [
     {
