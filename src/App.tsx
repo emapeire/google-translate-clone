@@ -2,7 +2,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
 import useStore from './hooks/useStore'
-import { AUTO_LANGUAGE, VOICE_LANGUAGES } from './constants'
+import { AUTO_LANGUAGE, VOICE_LANGUAGES } from './utils/constants'
 import { ArrowsIcon, ClipboardIcon, SpeakerIcon } from './components/Icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
@@ -23,46 +23,39 @@ function App() {
     setToLanguage,
     setFromText,
     setToText
-  } = useStore()
+  } = useStore();
 
   const debounceFromText = useDebounce(fromText)
 
   useEffect(() => {
     if (debounceFromText === '') return
     translate({ fromLanguage, toLanguage, text: debounceFromText })
-      .then((toText: string) => {
+      .then(toText => {
         if (toText === null) return
         setToText(toText)
       })
-      .catch(() => {
-        setToText('Error')
-      })
-  }, [debounceFromText, fromLanguage, toLanguage, setToText])
+      .catch(() => { setToText('Error') })
+  }, [debounceFromText, fromLanguage, toLanguage])
 
-  const [isActionRunning, setIsActionRunning] = useState(false)
+  const [isActionRunning, setIsActionRunning] = useState(false);
 
-  const handleClipboard = async () => {
-    await navigator.clipboard.writeText(toText)
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(toText)
   }
 
   const handleSpeak = () => {
-    setIsActionRunning(true)
+    setIsActionRunning(true);
     const utterance = new SpeechSynthesisUtterance(toText)
     utterance.lang = VOICE_LANGUAGES[toLanguage]
     utterance.rate = 1
-    utterance.onend = () => setIsActionRunning(false)
+    utterance.onend = () => setIsActionRunning(false);
     speechSynthesis.speak(utterance)
   }
 
   return (
     <Container fluid>
       <h1
-        style={{
-          color: 'black',
-          fontSize: '24px',
-          textAlign: 'center',
-          marginBottom: '24px'
-        }}
+        style={{ color: 'black', fontSize: '24px', textAlign: 'center', marginBottom: '24px' }}
       >
         Google Translate
       </h1>
@@ -81,7 +74,7 @@ function App() {
             />
           </Stack>
         </Col>
-        <Col xs='auto'>
+        <Col xs="auto">
           <Button
             variant='link'
             disabled={fromLanguage === AUTO_LANGUAGE || loading}
@@ -109,10 +102,13 @@ function App() {
                   position: 'absolute',
                   left: 0,
                   bottom: 0,
-                  display: 'flex'
+                  display: 'flex',
                 }}
               >
-                <Button variant='link' onClick={void handleClipboard}>
+                <Button
+                  variant='link'
+                  onClick={handleClipboard}
+                >
                   <ClipboardIcon />
                 </Button>
                 <Button
@@ -127,8 +123,8 @@ function App() {
           </Stack>
         </Col>
       </Row>
-    </Container>
+    </Container >
   )
 }
 
-export default App
+export default App;

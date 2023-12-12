@@ -1,30 +1,34 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked',
-    'plugin:react-hooks/recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime'
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true }
-    ],
-    'react/jsx-no-target-blank': [2, { allowReferrer: false }]
+  env: {
+    browser: true,
+    es2021: true,
   },
+  extends: ["standard-with-typescript", "plugin:react/recommended"],
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
+      env: {
+        node: true,
+      },
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        project: './tsconfig.json'
-      }
-    }
-  ]
-}
+        sourceType: "script",
+      },
+    },
+  ],
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./vite.config.ts"],
+  },
+  plugins: ["react"],
+  rules: {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "import/no-absolute-path": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+  },
+};
