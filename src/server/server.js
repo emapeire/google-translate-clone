@@ -11,6 +11,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.disable('x-powered-by')
 
 app.use((req, _res, next) => {
   console.log('Request URL:', req.originalUrl)
